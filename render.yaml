@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: shl-recommender
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SHL_CHAT_MODEL
+        value: models/gemini-2.5-flash-lite 
+      - key: SHL_EMBED_MODEL
+        value: models/gemini-embedding-001
+    healthCheckPath: /health
